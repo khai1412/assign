@@ -16,7 +16,11 @@ public class CarManager {
     public static void main(String[] args) {
         List<Brand> a= new ArrayList<Brand>();
         BrandList b= new BrandList();
-        b.
+        String c="B7-2018, BMW 730Li (2018), Harman Kardon: 3.749";
+        String[]d=c.split("[,]+");
+        for(int i=0;i<d.length;i++){
+            System.out.println(d[i]);
+        }
            
     }
 }
