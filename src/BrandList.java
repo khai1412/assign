@@ -1,15 +1,12 @@
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -122,11 +119,11 @@ public class BrandList {
         String Sound_manufacturer=""; 
         int price=0;
         
-        while(brand_name==""){
+        while("".equals(brand_name)){
             System.out.print("Brand name: ");
             brand_name=sc.nextLine();
         }
-        while(Sound_manufacturer==""){
+        while("".equals(Sound_manufacturer)){
             System.out.print("Sound manufacturer: ");
             Sound_manufacturer=sc.nextLine();
         }
