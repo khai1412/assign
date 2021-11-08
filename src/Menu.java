@@ -18,7 +18,7 @@ public class Menu {
         for(int i=0;i<options.size();i++){
             System.out.println((i+1)+" "+options.get(i));
         }
-        System.out.print("Please choose an option 1 to N: ");
+        System.out.print("Please choose an option 1 to "+options.size()+": ");
         int p=sc.nextInt();
         return p;
     }
@@ -26,10 +26,11 @@ public class Menu {
         Scanner sc= new Scanner(System.in);
         int choice =this.int_getChoice(options);
         int n=options.size();
-        int p;
-        do{
+        int p=choice;
+        while(p<0||p>n){
+            System.out.println("please enter from 1 to "+options.size());
             p=sc.nextInt();
-        } while(p<0||p>n);
+        }
         return options.get(p);
     }
 }
