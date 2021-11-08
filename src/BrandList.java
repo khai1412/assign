@@ -24,7 +24,7 @@ public class BrandList {
         
     }
     public boolean loadFromFile(ArrayList<Brand> b,String filename) throws FileNotFoundException, IOException{
-        File f= new File(filename);
+        File f= new File("D:\\Java_test\\Assignment\\src\\brands.txt");
         if(f.exists()){
             try{
             BufferedReader br = null;
@@ -37,17 +37,26 @@ public class BrandList {
                 for(int i=0;i<param.length;i++){
                     param[i]=param[i].trim();
                 }
-                b.add(new Brand(param[0],param[1],param[2].split("[:]")[0].trim(),Integer.parseInt(param[2].split("[:]")[1].trim())));
+                double ff=Double.parseDouble(param[2].split("[:]")[1].trim());
+                //ff=Float.parseFloat(String.format("%.3f", ff));  
+                //System.out.println(ff);
+                b.add(new Brand(param[0],param[1],param[2].split("[:]")[0].trim(),ff));
+                line=br.readLine();
             }
             br.close();
             fr.close();
+            return true;
             }catch(Exception e){
                 System.out.println(e);
+                return true;
+                
             }
             
            
+        } else {
+            return false;
         }
-        return true;
+        //return true;
     }
     public boolean saveToFile(ArrayList<Brand> b,String filename){
         try{
@@ -59,6 +68,7 @@ public class BrandList {
             }
             fw.close();
             pw.close();
+            System.out.println("Save complete");
         }catch(Exception e){
             System.out.println(e);
         }
@@ -81,63 +91,96 @@ public class BrandList {
         String brand_id = null;
         String brand_name="";
         String Sound_manufacturer=""; 
-        int price=0;
+        double price=0;
         int check=0;
         while(check==0){
         System.out.print("Brand ID: ");
         brand_id=sc.nextLine();
+        int dem=0;
         for(int i=0;i<b.size();i++){
           if(brand_id.equalsIgnoreCase(b.get(i).getBrandID()))  {
-              check=1;
+              
               break;
           }
+          dem++;
+        }
+        if(dem==b.size()){
+            check=1;
+        } else {
+            System.out.println("Brand ID can not be duplicated.");
         }
       }
-        while(brand_name==""){
+        while(brand_name.isEmpty()==true){
             System.out.print("Brand name: ");
             brand_name=sc.nextLine();
+            //System.out.println(brand_name.toString());
+            if(brand_name.isEmpty()==true){
+                System.out.println("Brand name can not be blank.");
+            }
         }
-        while(Sound_manufacturer==""){
+        while(Sound_manufacturer.isEmpty()==true){
             System.out.print("Sound manufacturer: ");
             Sound_manufacturer=sc.nextLine();
+            if(Sound_manufacturer.isEmpty()==true){
+                System.out.println("Sound manufacturer can not be blank.");
+            }
         }
-        while(price ==0){
+        while(price <=0){
             System.out.print("Price: ");
-            price=sc.nextInt();
+            price=sc.nextDouble();
+            if(price<=0){
+                System.out.println("Price must be a positive real number.");
+            }
         }
         b.add(new Brand(brand_id,brand_name,Sound_manufacturer,price));
-       
+        System.out.println("Add brand success");
     }
     public void updateBrand(ArrayList<Brand>b){
         Scanner sc= new Scanner(System.in);
+        System.out.print("Enter brand ID: ");
         String brand_id=sc.nextLine();
-        int pos=this.searchID(b, brand_id);
-        if(pos<0){
+        int pos = this.searchID(b, brand_id);
+        String brand_name = "";
+        String Sound_manufacturer = "";
+        double price = 0;
+
+        if (pos < 0) {
             System.out.println("not found");
         } else {
-        String brand_name="";
-        String Sound_manufacturer=""; 
-        int price=0;
-        
-        while("".equals(brand_name)){
-            System.out.print("Brand name: ");
-            brand_name=sc.nextLine();
+            while (brand_name.isEmpty() == true) {
+                System.out.print("Brand name: ");
+                brand_name = sc.nextLine();
+                if (brand_name.isEmpty() == true) {
+                    System.out.println("Brand name can not be blank.");
+                }
+            }
+            while (Sound_manufacturer.isEmpty() == true) {
+                System.out.print("Sound manufacturer: ");
+                Sound_manufacturer = sc.nextLine();
+                if (Sound_manufacturer.isEmpty() == true) {
+                    System.out.println("Sound manufacturer can not be blank.");
+                }
+            }
+            while (price <= 0) {
+                System.out.print("Price: ");
+                price = sc.nextDouble();
+                if (price <= 0) {
+                    System.out.println("Price must be a positive real number.");
+                }
+            }
+            
+            b.set(pos, new Brand(brand_id, brand_name, Sound_manufacturer, price));
+            System.out.println("update successully");
+           
         }
-        while("".equals(Sound_manufacturer)){
-            System.out.print("Sound manufacturer: ");
-            Sound_manufacturer=sc.nextLine();
-        }
-        while(price ==0){
-            System.out.print("Price: ");
-            price=sc.nextInt();
-        }
-        b.set(pos, new Brand(brand_id,brand_name,Sound_manufacturer,price));
-
-        }
+         
+            
     }
-    public void listBrands(ArrayList<Brand>b){
-        for(int i=0;i<b.size();i++){
+    public void listBrands(ArrayList<Brand>b) {
+        //boolean c= this.loadFromFile(b, "brands.txt");
+        
+            for(int i=0;i<b.size();i++){
             System.out.println(b.get(i));
-        }
+            }
     }
 }
